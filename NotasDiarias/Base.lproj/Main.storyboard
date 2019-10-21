@@ -10,7 +10,7 @@
         <!--Notas Diarias-->
         <scene sceneID="cLn-7w-joF">
             <objects>
-                <tableViewController id="hAN-81-wSY" sceneMemberID="viewController">
+                <tableViewController id="hAN-81-wSY" customClass="ListarAnotacoesTableViewController" customModule="NotasDiarias" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wZs-k9-JIP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -45,13 +45,13 @@
         <!--Adicionar-->
         <scene sceneID="G0a-Mm-f6u">
             <objects>
-                <viewController id="qxC-y1-vkI" sceneMemberID="viewController">
+                <viewController id="qxC-y1-vkI" customClass="AnotacaoViewController" customModule="NotasDiarias" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dat-oL-aJV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qZs-BI-McN">
-                                <rect key="frame" x="8" y="98" width="414" height="774"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qZs-BI-McN">
+                                <rect key="frame" x="-20" y="72" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -69,8 +69,15 @@
                         <viewLayoutGuide key="safeArea" id="jLu-Jg-G5p"/>
                     </view>
                     <navigationItem key="navigationItem" title="Adicionar" id="B9N-t1-Yl3">
-                        <barButtonItem key="rightBarButtonItem" title="Salvar" id="wDh-4O-wMG"/>
+                        <barButtonItem key="rightBarButtonItem" title="Salvar" id="wDh-4O-wMG">
+                            <connections>
+                                <action selector="salvar:" destination="qxC-y1-vkI" id="ZEH-sN-tfq"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="textView" destination="qZs-BI-McN" id="8dN-D9-mkW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ATU-jy-Qxa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
