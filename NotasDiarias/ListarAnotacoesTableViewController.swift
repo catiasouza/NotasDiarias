@@ -51,7 +51,16 @@ class ListarAnotacoesTableViewController: UITableViewController {
 
         let anotacao = self.anotacoes[indexPath.row]
         let textoRecuperado = anotacao.value(forKey: "texto")
+        let dataRecuperada = anotacao.value(forKey: "data")
+        
+        //FORMATA DATA
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy hh:mm"
+        
+        let novaData = dateFormatter.string(from: dataRecuperada as! Date)
+        
         celula.textLabel?.text = textoRecuperado as! String
+        celula.detailTextLabel?.text = novaData
         return celula
     }
    
