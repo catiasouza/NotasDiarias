@@ -1,46 +1,60 @@
-//
-//  ListarAnotacoesTableViewController.swift
-//  NotasDiarias
-//
-//  Created by Catia Miranda de Souza on 21/10/19.
-//  Copyright © 2019 Catia Miranda de Souza. All rights reserved.
-//
-
 import UIKit
+import CoreData
 
 class ListarAnotacoesTableViewController: UITableViewController {
+    
+    var context: NSManagedObjectContext!
+    var anotacoes: [NSManagedObject] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+         let appDelegate = UIApplication.shared.delegate as! AppDelegate
+               context = appDelegate.persistentContainer.viewContext
+        
     }
-
-    // MARK: - Table view data source
+    override func viewDidAppear(_ animated: Bool) {
+        self.recuperarAnotacoes()
+    }
+    func recuperarAnotacoes(){
+        
+        let requisicao = NSFetchRequest<NSFetchRequestResult>(entityName: "Anotacao")
+        
+        do {
+            
+            let  anotacoesRecuperadas =  try context.fetch(requisicao)
+            self.anotacoes = anotacoesRecuperadas as! [NSManagedObject]
+            self.tableView.reloadData()
+            
+        } catch  let erro as Error{
+            print("Erro ao recuperar anotacoes: \(erro.localizedDescription)")
+            
+        }
+        
+    }
+    
+    
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return self.anotacoes.count
     }
 
-    /*
+   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let celula = tableView.dequeueReusableCell(withIdentifier: "celula", for: indexPath)
 
-        // Configure the cell...
-
-        return cell
+        let anotacao = self.anotacoes[indexPath.row]
+        let textoRecuperado = anotacao.value(forKey: "texto")
+        celula.textLabel?.text = textoRecuperado as! String
+        return celula
     }
-    */
+   
 
     /*
     // Override to support conditional editing of the table view.
