@@ -44,7 +44,21 @@ class ListarAnotacoesTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return self.anotacoes.count
     }
-
+    
+    //VERFICAR LINHA SELECIONADA
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        self.tableView.deselectRow(at: indexPath, animated: true)
+        let indice = indexPath.row
+        let anotacao = self.anotacoes[indice]
+        self.performSegue(withIdentifier: "verAnotacao", sender: anotacao)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "verAnotacao"{
+            let viewDestino = segue.destination as! AnotacaoViewController
+            viewDestino.anotacao = sender as? NSManagedObject
+        }
+    }
    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celula = tableView.dequeueReusableCell(withIdentifier: "celula", for: indexPath)

@@ -49,7 +49,7 @@
                     <navigationItem key="navigationItem" title="Notas Diarias" id="8tS-uU-B8C">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="W28-VG-DuU">
                             <connections>
-                                <segue destination="qxC-y1-vkI" kind="show" id="8bm-Ag-vks"/>
+                                <segue destination="qxC-y1-vkI" kind="show" identifier="verAnotacao" id="8bm-Ag-vks"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

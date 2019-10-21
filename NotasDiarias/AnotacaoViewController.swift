@@ -7,6 +7,7 @@ class AnotacaoViewController: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
     var context: NSManagedObjectContext!
+    var anotacao: NSManagedObject!
     
     
     override func viewDidLoad() {
@@ -14,7 +15,16 @@ class AnotacaoViewController: UIViewController {
         
         //CONFIGURACOES INICIAIS
         self.textView.becomeFirstResponder()
-        self.textView.text = ""
+        if anotacao != nil{    //ATUALIZAR
+            if let textoRecuperado = anotacao.value(forKey: "texto"){
+                self.textView.text = String(describing: textoRecuperado)
+            }
+            
+            
+        }else{
+            self.textView.text = ""
+        }
+        
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         context = appDelegate.persistentContainer.viewContext
@@ -23,15 +33,37 @@ class AnotacaoViewController: UIViewController {
       
     }
     @IBAction func salvar(_ sender: Any) {
-        self.salvarAnotacao()
+
+        if anotacao != nil{   //ATUALIZAR
+            self.atualizarAnotacao()
+            
+        }else{
+            self.salvarAnotacao()
+        }
+        
         
         //RETORNAR A TELA INICIAL
         self.navigationController?.popToRootViewController(animated: true)
         
     }
+    
+    func atualizarAnotacao(){
+        anotacao.setValue(self.textView.text, forKey: "texto")
+        anotacao.setValue(Date(), forKey: "data")
+        
+        do {
+            try context.save()
+            print("Sucesso ao atualizar anotacao")
+            
+        } catch let erro as Error {
+            print("Erro ao atualizar anotacao: " + erro.localizedDescription)
+        }
+    }
     func salvarAnotacao()  {
+        
          //CRIA ANOTACAO
         let novaAnotacao = NSEntityDescription.insertNewObject(forEntityName: "Anotacao", into: context)
+        
         //CONFIGURA ANOTACAO
         novaAnotacao.setValue(self.textView.text, forKey: "texto")
         novaAnotacao.setValue(Date(), forKey: "data")
