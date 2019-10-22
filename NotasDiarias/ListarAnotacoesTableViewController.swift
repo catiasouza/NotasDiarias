@@ -19,6 +19,8 @@ class ListarAnotacoesTableViewController: UITableViewController {
     func recuperarAnotacoes(){
         
         let requisicao = NSFetchRequest<NSFetchRequestResult>(entityName: "Anotacao")
+        let ordenacao = NSSortDescriptor(key: "data", ascending: false)
+        requisicao.sortDescriptors = [ordenacao]
         
         do {
             
@@ -26,7 +28,7 @@ class ListarAnotacoesTableViewController: UITableViewController {
             self.anotacoes = anotacoesRecuperadas as! [NSManagedObject]
             self.tableView.reloadData()
             
-        } catch  let erro as Error{
+        } catch  let erro{
             print("Erro ao recuperar anotacoes: \(erro.localizedDescription)")
             
         }
@@ -79,25 +81,25 @@ class ListarAnotacoesTableViewController: UITableViewController {
     }
    
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            
+            let indice = indexPath.row
+            let anotacao = self.anotacoes[indice]
+            self.context.delete(anotacao)
+            self.anotacoes.remove(at: indice)
+           
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            do {
+                try self.context.save()
+            } catch let erro {
+                print("Erro ao remover item \(erro)")
+            }
         }    
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
